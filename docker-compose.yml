@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  api:
+    build: ./express
+    volumes:
+      - ./express:/usr/src/app
+      - /usr/src/app/node_modules # So we don't need to run npm install locally - Taken from https://stackoverflow.com/a/37898591/6258471
+    environment:
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: password
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
