@@ -1,4 +1,4 @@
-# bootstrap-express-react-mongo
+# docker-express-react-mongo
 Bootstrap app for a dockerized Express + React + MongoDB setup
 
 ## Running
