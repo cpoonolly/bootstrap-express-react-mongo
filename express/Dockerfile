@@ -2,12 +2,9 @@ FROM node
 
 WORKDIR /usr/src/app
 
-# Cache dependencies
-COPY ./package.json ./package.json
+# Cache dependencies & then copy remaining src files
 COPY ./package.json ./package.json
 RUN npm install --silent
-
-# Copy src code over
 COPY . .
 
 EXPOSE 8080
