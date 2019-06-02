@@ -11,6 +11,7 @@ This creates the following containers
 - React prod server (served with nginx internally)
 
 The dev server is available on http://localhost:3000
+
 The prod server is available on http://localhost:80
 
 ## Development
