@@ -22,13 +22,13 @@ mongoClient.connect(function(err) {
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(logger(process.env.NODE_ENV || 'dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.json({msg: 'Hello World!'});
 });
 
 module.exports = app;
