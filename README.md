@@ -18,5 +18,7 @@ The prod server is available on http://localhost:80
 For the most part all you need to do is modify the code! Changes are picked up automatically!
 
 Exceptions to this are:
-- When adding new npm packages you should run `docker-compose down && docker-compose build && docker-compose up -d`
+- When adding new npm packages
 - When picking up changes on the prod server
+
+For both these cases simply run `docker-compose down && docker-compose build && docker-compose up -d`
