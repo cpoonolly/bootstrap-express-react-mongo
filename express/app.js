@@ -101,7 +101,14 @@ app.use(passport.session());
 
 // Setup Routes
 app.post('/login', passport.authenticate('local'), (req, res) => {
-  res.end()
+  let sessionUser = req.user;
+
+  res.json({
+    username: sessionUser.username,
+    is_doctor: sessionUser.is_doctor,
+    is_patient: sessionUser.is_patient,
+    is_logged_in: true
+  });
 });
 
 app.post('/logout', (req, res) => {
@@ -138,6 +145,29 @@ app.put('/patient', async (req, res, next) => {
   }
 });
 
+app.get('/patient', async (req, res, next) => {
+  try {
+    // check if user is a doctor
+    let sessionUser = req.user;
+    if (!sessionUser) {
+      res.status(401);
+      res.json({msg: 'Unauthorized'});
+      return;
+    } else if (!sessionUser.is_patient) {
+      res.status(403);
+      res.json({msg: 'Permission Denied'});
+      return;
+    }
+
+    // load patient details
+    let patient = await db.collection('user').findOne({_id: sessionUser._id});
+
+    res.json({patient_details: patient.patient_details});
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/patients', async (req, res, next) => {
   try {
     // check if user is a doctor
@@ -162,14 +192,18 @@ app.get('/patients', async (req, res, next) => {
   }
 });
 
-app.get('/', async (req, res, next) => {
-  try {
-    let userStats = await db.collection('user').stats();
-    let username = req.user ? req.user.username : '';
-  
-    res.json({msg: `Hello ${username} !There are ${userStats.count} users!`});
-  } catch (err) {
-    next(err);
+app.get('/session', async (req, res, next) => {
+  let sessionUser = req.user;
+
+  if (sessionUser) {
+    res.json({
+      username: sessionUser.username,
+      is_doctor: sessionUser.is_doctor,
+      is_patient: sessionUser.is_patient,
+      is_logged_in: true
+    });
+  } else {
+    res.json({is_logged_in: false});
   }
 });
 
