@@ -25,6 +25,7 @@ services:
       - ./express:/usr/src/app
       - /usr/src/app/node_modules
     environment:
+      SESSION_SECRET: foo
       MONGO_USERNAME: root
       MONGO_PASSWORD: password
 

@@ -18,6 +18,7 @@ services:
     build: ./express
     environment:
       NODE_ENV: 'production'
+      SESSION_SECRET: foo
       MONGO_USERNAME: root
       MONGO_PASSWORD: password
 
